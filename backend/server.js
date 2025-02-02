@@ -8,6 +8,7 @@ import productRoutes from './routes/product.routes.js';
 import cartRoutes from './routes/cart.routes.js'
 import orderRoutes from './routes/order.routes.js'
 import casRoutes from './routes/cas.route.js'
+import reviewRoutes from './routes/review.routes.js'
 dotenv.config(); 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use("/api/product",productRoutes);
 app.use("/api/cart",cartRoutes);
 app.use("/api/order",orderRoutes);
 app.use("/api/cas",casRoutes);
+app.use("/api/review",reviewRoutes)
 
 app.post("/verify-captcha", async (req, res) => {
     const { token } = req.body;

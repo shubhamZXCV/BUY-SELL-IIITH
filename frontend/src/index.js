@@ -14,7 +14,8 @@ import OrderHistory from './OrderHistory';
 import Deliver from './Deliver';
 import Support from './Support';
 import reportWebVitals from './reportWebVitals';
-
+import Write from './Write';
+import Review from './Review'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -63,6 +64,15 @@ const router = createBrowserRouter([
       {
         path:"/support",
         element:<Support/>
+      }
+      ,
+      {
+        path:"/write",
+        element:<Write/>
+      },
+      {
+        path:"/review/:receiverEmail",
+        element:<Review/>
       }
     ]
   }

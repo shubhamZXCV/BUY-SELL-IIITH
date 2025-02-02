@@ -1,60 +1,56 @@
 import React from "react";
-import { useParams ,useNavigate} from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-
-
 
 const Product = () => {
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const { productId } = useParams();
 
-  const handleClickCart=async (sellerEmail)=>{
-
+  const handleClickCart = async (sellerEmail) => {
     const buyerEmail = localStorage.getItem("email");
-    if(buyerEmail == sellerEmail){
+    if (buyerEmail == sellerEmail) {
       alert("You cant buy your own products!!!");
       return;
     }
 
-      const url = "http://localhost:5000/api/cart/add";
+    const url = "http://localhost:5000/api/cart/add";
 
-      const token = localStorage.getItem("token");
-
+    const token = localStorage.getItem("token");
 
     // Request payload
     const body = JSON.stringify({
-      token:token,
-      productId:productId
+      token: token,
+      productId: productId,
     });
-  
+
     try {
       // Send POST request
       const response = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json', // Specify JSON payload
+          "Content-Type": "application/json", // Specify JSON payload
         },
-        body
+        body,
       });
-  
+
       // Parse the response
       const data = await response.json();
-  
+
       if (response.ok) {
-        console.log('Product added to cart:', data);
+        console.log("Product added to cart:", data);
         alert("product added to cart!!");
-        navigate("/feed")
+        navigate("/feed");
         return data;
       } else {
-        console.error('Error adding product to cart:', data.message);
+        console.error("Error adding product to cart:", data.message);
         throw new Error(data.message);
       }
     } catch (error) {
-      console.error('Request failed:', error.message);
+      console.error("Request failed:", error.message);
       throw error;
     }
-  }
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -92,11 +88,7 @@ const Product = () => {
         {product ? (
           <div className="card lg:card-side bg-base-100 shadow-xl flex">
             <figure className="flex-1">
-              <img
-                src={product.imageUrl}
-                alt="Album"
-                className="w-48"
-              />
+              <img src={product.imageUrl} alt="Album" className="w-48" />
             </figure>
             <div className="card-body flex-1">
               <h2 className="card-title">{product.name}</h2>
@@ -104,7 +96,19 @@ const Product = () => {
               <p className="">{product.description}</p>
               <div className="card-actions justify-end">
                 <span className="text-info text-xl">{product.price}</span>
-                {!product.sold && <button className="btn btn-primary" onClick={()=>{handleClickCart(product.sellerEmail)}}>Cart</button>}
+                {!product.sold && (
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                      handleClickCart(product.sellerEmail);
+                    }}
+                  >
+                    Cart
+                  </button>
+                )}
+                <button className="btn btn-primary"
+                onClick={()=>{navigate(`/review/${product.sellerEmail}`)}}
+                >review</button>
               </div>
             </div>
           </div>

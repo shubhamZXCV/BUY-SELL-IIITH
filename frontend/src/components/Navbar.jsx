@@ -98,6 +98,11 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
+              <Link to="/write">
+                <button>Write</button>
+              </Link>
+            </li>
+            <li>
               <button onClick={handleLogout}>Logout</button>
             </li>
           </ul>
